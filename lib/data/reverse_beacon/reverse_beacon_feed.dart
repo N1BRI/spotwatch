@@ -5,7 +5,7 @@ import 'package:circular_buffer/circular_buffer.dart';
 import 'package:spotwatch/models/spot.dart';
 
 class ReverseBeaconFeed {
-  CircularBuffer<Spot> beaconSpots = CircularBuffer<Spot>(8);
+  CircularBuffer<Spot> beaconSpots = CircularBuffer<Spot>(10);
   Socket? socket;
   StreamSubscription<Spot>? subscription;
   StreamController<Spot> controller = StreamController();

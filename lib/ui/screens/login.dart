@@ -33,55 +33,61 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginFormBloc, LoginFormState>(
+    return BlocConsumer<LoginFormBloc, LoginFormState>(
       listener: (BuildContext context, LoginFormState state) {
         if (state.status.isSuccess) {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           FocusScope.of(context).requestFocus(FocusNode());
           Navigator.pushNamed(context, '/app');
           context.read<ReverseBeaconBloc>().add(ReverseBeaconConnected(state.callsign.value));
         }
-        if (state.status.isInProgress) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(content: Text('Submitting...')),
-            );
-        }
       },
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Text(
-                  'SPOTWATCH',
-                  style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700,
-                      color: Color.fromARGB(255, 64, 62, 167)),
+      builder: (BuildContext context, LoginFormState state) { 
+       switch (state.status) {
+            case FormzSubmissionStatus.initial:
+            case FormzSubmissionStatus.failure:
+            case FormzSubmissionStatus.canceled:
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          const Text(
+                            'SPOTWATCH',
+                            style: TextStyle(
+                                fontSize: 40,
+                                fontWeight: FontWeight.w700,
+                                color: Color.fromARGB(255, 64, 62, 167)),
+                          ),
+                          const Icon(
+                            Icons.radar_sharp,
+                            size: 200,
+                            color: Color.fromARGB(255, 64, 62, 167),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CallsignInput(focusNode: _callsignFocusNode),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          const SubmitButton(),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                const Icon(
-                  Icons.radar_sharp,
-                  size: 200,
-                  color: Color.fromARGB(255, 64, 62, 167),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                CallsignInput(focusNode: _callsignFocusNode),
-                const SizedBox(
-                  height: 15,
-                ),
-                const SubmitButton(),
-              ],
-            ),
-          ),
-        ),
-      ),
+              );
+            case FormzSubmissionStatus.inProgress:
+              return const Center(child: CircularProgressIndicator());
+            case FormzSubmissionStatus.success:
+              return const Center(child: CircularProgressIndicator());
+          }
+      }
+
     );
   }
 }

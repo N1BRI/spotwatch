@@ -21,7 +21,7 @@ class ReverseBeaconLivefeed extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      Text('Initial'),
+                      Text('Fetching Spots...'),
                       
                     ],
                   ),
@@ -32,22 +32,28 @@ class ReverseBeaconLivefeed extends StatelessWidget {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    Center(
-                      child: ListView.builder(physics: const AlwaysScrollableScrollPhysics(),
+                     ListView.builder(physics: const AlwaysScrollableScrollPhysics(),
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemCount: state.reverseBeaconFeed.beaconSpots.length,
                         itemBuilder: (context, index) {
                           return 
                           Card(child:
-                          ListTile(
-                            title: Text(state.reverseBeaconFeed.beaconSpots[index].spottedCall),
-                            subtitle: Text(state.reverseBeaconFeed.beaconSpots[index]
-                                .toString()),
-                          ));
+                           Padding(
+                             padding: const EdgeInsets.all(8.0),
+                             child: Row(children: [Column(
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               children: [
+                                 Text(state.reverseBeaconFeed.beaconSpots[index].spottedCall, style: const TextStyle(fontWeight: FontWeight.w800),),
+                                 Text(state.reverseBeaconFeed.beaconSpots[index].toString(), style: const TextStyle(fontSize: 12),)
+                               ],
+                             ),
+                             ],),
+                           )
+                          );
                         },
                       ),
-                    ),
+                    
                   ],
                 ),
               );

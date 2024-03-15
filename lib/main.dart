@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotwatch/data/login_form/bloc/login_form_bloc.dart';
 import 'package:spotwatch/data/reverse_beacon/bloc/reverse_beacon_bloc.dart';
 import 'package:spotwatch/data/reverse_beacon/reverse_beacon_feed.dart';
-import 'package:spotwatch/ui/screens/app.dart';
-import 'package:spotwatch/ui/screens/login.dart';
+import 'package:spotwatch/ui/screens/main_screen.dart';
+import 'package:spotwatch/ui/screens/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         routes: {
           '/': (context) => const Home(),
-          '/app': (context) => const App()
+          '/app': (context) => const MainScreen()
         },
         title: 'Spotwatch',
         theme: ThemeData(
@@ -61,7 +61,7 @@ class Home extends StatelessWidget {
             Color.fromARGB(255, 145, 187, 221),
           ],
         )),
-        child: const Center(child: Login()),
+        child: const Center(child: LoginScreen()),
       ),
     );
   }

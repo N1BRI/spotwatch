@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotwatch/data/reverse_beacon/bloc/reverse_beacon_bloc.dart';
+import 'package:spotwatch/models/enums.dart';
 
-class ReverseBeaconLivefeed extends StatelessWidget {
-  const ReverseBeaconLivefeed({Key? key}) : super(key: key);
+class ReverseBeaconList extends StatelessWidget {
+  const ReverseBeaconList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ReverseBeaconBloc, ReverseBeaconState>(
         listener: (context, state) {
-          if (state is ReverseBeaconUpdated) {
-            context.read<ReverseBeaconBloc>().add(const ReverseBeaconWaiting());
-          }
+          // if (state.reverseBeaconStatus == ReverseBeaconStatus.listening) {
+          //   context.read<ReverseBeaconBloc>().add(const ReverseBeaconListening());
+          // }
         },
         builder: (context, state) {
-          switch (state) {
-            case ReverseBeaconInitial():
+          switch (state.reverseBeaconStatus) {
+            case ReverseBeaconStatus.initial:
               return const Center(
                 child: Padding(
                   padding: EdgeInsets.all(8.0),
@@ -27,8 +28,9 @@ class ReverseBeaconLivefeed extends StatelessWidget {
                   ),
                 ),
               );
-            case ReverseBeaconListening():
-            case ReverseBeaconUpdated():
+            case ReverseBeaconStatus.listening:
+            case ReverseBeaconStatus.updated:
+            case ReverseBeaconStatus.paused:
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -57,6 +59,10 @@ class ReverseBeaconLivefeed extends StatelessWidget {
                   ],
                 ),
               );
+            case ReverseBeaconStatus.error:
+              return const Center(child: Text('Error'));
+            case ReverseBeaconStatus.closed:
+              return const Center(child: Text('Closed'));
           }
         },
       );

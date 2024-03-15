@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotwatch/data/reverse_beacon/bloc/reverse_beacon_bloc.dart';
-import 'package:spotwatch/data/reverse_beacon/reverse_beacon_livefeed.dart';
-import 'package:spotwatch/ui/screens/widgets/filter_screen.dart';
-import 'package:spotwatch/ui/screens/widgets/spots_map_screen.dart';
+import 'package:spotwatch/ui/screens/widgets/reverse_beacon_list.dart';
+import 'package:spotwatch/ui/screens/filter_screen.dart';
+import 'package:spotwatch/ui/screens/spots_map_screen.dart';
 
-class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
-  State<App> createState() => _AppState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _AppState extends State<App> {
+class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   bool _isVisible = false;
   static const List<Widget> _navOptions = <Widget>[
     FilterScreen(),
-    ReverseBeaconLivefeed(),
+    ReverseBeaconList(),
     SpotsMapScreen()
   ];
   @override
@@ -67,8 +67,8 @@ class _AppState extends State<App> {
     setState(() {
       _selectedIndex = index;
       _isVisible = index > 0;
-      BlocProvider.of<ReverseBeaconBloc>(context)
-          .add(const ReverseBeaconWaiting());
+      // BlocProvider.of<ReverseBeaconBloc>(context)
+      //     .add(const ReverseBeaconListening());
     });
   }
 }

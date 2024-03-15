@@ -4,14 +4,14 @@ import 'package:formz/formz.dart';
 import 'package:spotwatch/data/login_form/bloc/login_form_bloc.dart';
 import 'package:spotwatch/data/reverse_beacon/bloc/reverse_beacon_bloc.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginScreenState extends State<LoginScreen> {
   final _callsignFocusNode = FocusNode();
 
   @override
@@ -47,35 +47,37 @@ class _LoginState extends State<Login> {
             case FormzSubmissionStatus.failure:
             case FormzSubmissionStatus.canceled:
               return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Center(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const Text(
-                            'SPOTWATCH',
-                            style: TextStyle(
-                                fontSize: 40,
-                                fontWeight: FontWeight.w700,
-                                color: Color.fromARGB(255, 64, 62, 167)),
-                          ),
-                          const Icon(
-                            Icons.radar_sharp,
-                            size: 200,
-                            color: Color.fromARGB(255, 64, 62, 167),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          CallsignInput(focusNode: _callsignFocusNode),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          const SubmitButton(),
-                        ],
+                child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 400),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const Text(
+                              'SPOTWATCH',
+                              style: TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color.fromARGB(255, 64, 62, 167)),
+                            ),
+                            const Icon(
+                              Icons.radar_sharp,
+                              size: 200,
+                              color: Color.fromARGB(255, 64, 62, 167),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            CallsignInput(focusNode: _callsignFocusNode),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            const SubmitButton(),
+                          ],
+                        ),
                       ),
                     ),
                   ),

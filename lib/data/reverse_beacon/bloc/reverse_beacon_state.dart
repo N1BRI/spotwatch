@@ -1,28 +1,24 @@
 part of 'reverse_beacon_bloc.dart';
 
-@immutable
-sealed class ReverseBeaconState extends Equatable {
+final class ReverseBeaconState extends Equatable {
   final ReverseBeaconFeed reverseBeaconFeed;
   final String callsign;
-  const ReverseBeaconState(this.reverseBeaconFeed, this.callsign);
+  final ReverseBeaconStatus reverseBeaconStatus;
+  const ReverseBeaconState(
+      {required this.reverseBeaconFeed,
+      this.callsign = "",
+      this.reverseBeaconStatus = ReverseBeaconStatus.initial});
+
   @override
-  List<Object> get props => [callsign];
+  List<Object> get props => [callsign, reverseBeaconStatus, reverseBeaconFeed];
+
+  ReverseBeaconState copyWith(
+      {ReverseBeaconFeed? reverseBeaconFeed,
+      String? callsign,
+      ReverseBeaconStatus? reverseBeaconStatus}) {
+    return ReverseBeaconState(
+        reverseBeaconFeed: reverseBeaconFeed ?? this.reverseBeaconFeed,
+        callsign: callsign ?? this.callsign,
+        reverseBeaconStatus: reverseBeaconStatus ?? this.reverseBeaconStatus);
+  }
 }
-
-
-final class ReverseBeaconInitial extends ReverseBeaconState {
-  const ReverseBeaconInitial(super.reverseBeaconFeed, super.callsign);
-
-}
-
-final class ReverseBeaconUpdated extends ReverseBeaconState {
-  const ReverseBeaconUpdated(super.reverseBeaconFeed, super.callsign); 
-
-}
-
-final class ReverseBeaconListening extends ReverseBeaconState {
-  const ReverseBeaconListening(super.reverseBeaconFeed, super.callsign); 
-
-}
-
-

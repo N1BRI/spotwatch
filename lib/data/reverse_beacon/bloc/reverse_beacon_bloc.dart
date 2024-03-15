@@ -2,12 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:spotwatch/data/reverse_beacon/reverse_beacon_feed.dart';
+import 'package:spotwatch/models/enums.dart';
 import 'package:spotwatch/models/spot.dart';
 part 'reverse_beacon_event.dart';
 part 'reverse_beacon_state.dart';
 
 class ReverseBeaconBloc extends Bloc<ReverseBeaconEvent, ReverseBeaconState> {
-  ReverseBeaconBloc(ReverseBeaconFeed feed) : super(ReverseBeaconInitial(feed, '')) {
+  ReverseBeaconBloc(ReverseBeaconFeed feed) : super(ReverseBeaconState(reverseBeaconFeed: feed)) {
     on<ReverseBeaconConnected>((event, emit) async {
       await state.reverseBeaconFeed.connect(callsign: event.callsign);
 
@@ -19,12 +20,18 @@ class ReverseBeaconBloc extends Bloc<ReverseBeaconEvent, ReverseBeaconState> {
     on<ReverseBeaconSpotAvailable>(
       (event, emit) {
         state.reverseBeaconFeed.beaconSpots.add(event.spot);
-        emit(ReverseBeaconUpdated(state.reverseBeaconFeed, state.callsign));
+        emit(state.copyWith(callsign: state.callsign,
+        reverseBeaconFeed: state.reverseBeaconFeed,
+        reverseBeaconStatus: ReverseBeaconStatus.updated ));
       },
     );
 
-    on<ReverseBeaconWaiting>((event, emit) {
-      emit(ReverseBeaconListening(state.reverseBeaconFeed, state.callsign));
+    on<ReverseBeaconListening>((event, emit) {
+      emit(state.copyWith(callsign: state.callsign,
+        reverseBeaconFeed: event.feed,
+        reverseBeaconStatus: ReverseBeaconStatus.listening ));
     },);
+    
+
   }
 }

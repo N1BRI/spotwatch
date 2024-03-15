@@ -15,6 +15,8 @@ final class ReverseBeaconSpotAvailable extends ReverseBeaconEvent{
   const ReverseBeaconSpotAvailable(this.spot);
 }
 
-final class ReverseBeaconWaiting extends ReverseBeaconEvent{
-  const ReverseBeaconWaiting();
+final class ReverseBeaconListening extends ReverseBeaconEvent{
+  final ReverseBeaconFeed feed;
+  const ReverseBeaconListening(this.feed);
 }
+

@@ -10,9 +10,9 @@ class ReverseBeaconList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ReverseBeaconBloc, ReverseBeaconState>(
         listener: (context, state) {
-          // if (state.reverseBeaconStatus == ReverseBeaconStatus.listening) {
-          //   context.read<ReverseBeaconBloc>().add(const ReverseBeaconListening());
-          // }
+          if (state.reverseBeaconStatus == ReverseBeaconStatus.updated) {
+            context.read<ReverseBeaconBloc>().add(const ReverseBeaconListening());
+          }
         },
         builder: (context, state) {
           switch (state.reverseBeaconStatus) {

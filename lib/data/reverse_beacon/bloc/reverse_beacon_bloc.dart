@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:spotwatch/data/reverse_beacon/reverse_beacon_feed.dart';
+import 'package:spotwatch/models/reverse_beacon_feed.dart';
 import 'package:spotwatch/models/enums.dart';
 import 'package:spotwatch/models/spot.dart';
 part 'reverse_beacon_event.dart';
@@ -28,7 +28,21 @@ class ReverseBeaconBloc extends Bloc<ReverseBeaconEvent, ReverseBeaconState> {
 
     on<ReverseBeaconListening>((event, emit) {
       emit(state.copyWith(callsign: state.callsign,
-        reverseBeaconFeed: event.feed,
+        reverseBeaconFeed: state.reverseBeaconFeed,
+        reverseBeaconStatus: ReverseBeaconStatus.listening ));
+    },);
+
+     on<ReverseBeaconPaused>((event, emit) {
+      state.reverseBeaconFeed.subscription?.pause();
+      emit(state.copyWith(callsign: state.callsign,
+        reverseBeaconFeed: state.reverseBeaconFeed,
+        reverseBeaconStatus: ReverseBeaconStatus.paused ));
+    },);
+
+    on<ReverseBeaconResumed>((event, emit) {
+      state.reverseBeaconFeed.subscription?.resume();
+      emit(state.copyWith(callsign: state.callsign,
+        reverseBeaconFeed: state.reverseBeaconFeed,
         reverseBeaconStatus: ReverseBeaconStatus.listening ));
     },);
     

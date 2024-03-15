@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotwatch/data/login_form/bloc/login_form_bloc.dart';
 import 'package:spotwatch/data/reverse_beacon/bloc/reverse_beacon_bloc.dart';
-import 'package:spotwatch/data/reverse_beacon/reverse_beacon_feed.dart';
+import 'package:spotwatch/models/reverse_beacon_feed.dart';
 import 'package:spotwatch/ui/screens/main_screen.dart';
 import 'package:spotwatch/ui/screens/login_screen.dart';
 

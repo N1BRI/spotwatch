@@ -15,6 +15,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   bool _isVisible = false;
+  bool _isRunning = true;
   static const List<Widget> _navOptions = <Widget>[
     FilterScreen(),
     ReverseBeaconList(),
@@ -37,9 +38,9 @@ class _MainScreenState extends State<MainScreen> {
       body: _navOptions.elementAt(_selectedIndex),
       floatingActionButton: Visibility(
         visible: _isVisible,
-          child: const FloatingActionButton(
-        onPressed: null,
-        child: Icon(Icons.pause),
+          child:  FloatingActionButton(
+        onPressed: _toggleBeaconFeed,
+        child: _isRunning ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
       )),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -67,8 +68,21 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _selectedIndex = index;
       _isVisible = index > 0;
-      // BlocProvider.of<ReverseBeaconBloc>(context)
-      //     .add(const ReverseBeaconListening());
+      BlocProvider.of<ReverseBeaconBloc>(context)
+          .add(const ReverseBeaconListening());
+    });
+  }
+
+  void _toggleBeaconFeed(){
+    setState((){
+      if(_isRunning){
+        BlocProvider.of<ReverseBeaconBloc>(context)
+          .add(const ReverseBeaconPaused());
+      }else{
+        BlocProvider.of<ReverseBeaconBloc>(context)
+          .add(const ReverseBeaconResumed());
+      }
+      _isRunning = !_isRunning;
     });
   }
 }

@@ -6,3 +6,4 @@ enum ReverseBeaconStatus{
   error,
   closed
 }
+

@@ -18,4 +18,5 @@ class Spot{
   @override String toString() {
     return '$skimmerCall heard $spottedCall on $frequency @ $db db going $wpm WPM';
   }
+
 }

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:spotwatch/models/filter.dart';
 import 'package:spotwatch/models/reverse_beacon_feed.dart';
 import 'package:spotwatch/models/enums.dart';
 import 'package:spotwatch/models/spot.dart';
@@ -11,7 +12,9 @@ class ReverseBeaconBloc extends Bloc<ReverseBeaconEvent, ReverseBeaconState> {
       : super(ReverseBeaconState(reverseBeaconFeed: feed, filters: [])) {
     on<ReverseBeaconConnected>((event, emit) async {
       await state.reverseBeaconFeed.connect(callsign: event.callsign);
-      state.filters?.add((p0) => p0.spottedCall.toUpperCase().startsWith("K"));
+      state.callsign = event.callsign;
+      // state.filters?.add(Filter(label: state.callsign.toUpperCase(),
+      // on:(spot) => spot.spottedCall.toUpperCase() == state.callsign.toUpperCase()));
       state.reverseBeaconFeed.subscription =
           state.reverseBeaconFeed.controller.stream.listen((spot) {
         add(ReverseBeaconSpotAvailable(spot));
@@ -20,9 +23,11 @@ class ReverseBeaconBloc extends Bloc<ReverseBeaconEvent, ReverseBeaconState> {
 
     on<ReverseBeaconSpotAvailable>(
       (event, emit) {
-        if (state.filters != null) {
-          for (var filterFunc in state.filters!) {
-            if (filterFunc(event.spot)) {
+        if (state.filters!.isEmpty) { // note that the bloc uses a const constructor so this cannot be null
+          state.reverseBeaconFeed.beaconSpots.add(event.spot);
+        } else {
+          for (var filter in state.filters!) {
+            if (filter.on(event.spot)) {
               state.reverseBeaconFeed.beaconSpots.add(event.spot);
             }
           }
@@ -58,6 +63,15 @@ class ReverseBeaconBloc extends Bloc<ReverseBeaconEvent, ReverseBeaconState> {
         state.reverseBeaconFeed.subscription?.resume();
         emit(state.copyWith(
             callsign: state.callsign,
+            reverseBeaconFeed: state.reverseBeaconFeed,
+            reverseBeaconStatus: ReverseBeaconStatus.listening));
+      },
+    );
+    on<ReverseBeaconFiltersUpdated>(
+      (event, emit) {
+        emit(state.copyWith(
+            callsign: state.callsign,
+            filters: state.filters,
             reverseBeaconFeed: state.reverseBeaconFeed,
             reverseBeaconStatus: ReverseBeaconStatus.listening));
       },

@@ -27,3 +27,7 @@ final class ReverseBeaconResumed extends ReverseBeaconEvent{
   const ReverseBeaconResumed();
 }
 
+final class ReverseBeaconFiltersUpdated extends ReverseBeaconEvent{
+  const ReverseBeaconFiltersUpdated();
+}
+

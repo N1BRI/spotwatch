@@ -2,14 +2,14 @@ part of 'reverse_beacon_bloc.dart';
 
 final class ReverseBeaconState {
   final ReverseBeaconFeed reverseBeaconFeed;
-  final String callsign;
+  String callsign;
   final ReverseBeaconStatus reverseBeaconStatus;
-  List<bool Function(Spot)>? filters = [];
+  List<Filter>? filters = [];
   ReverseBeaconState(
       {required this.reverseBeaconFeed,
       this.callsign = "",
       this.reverseBeaconStatus = ReverseBeaconStatus.initial, 
-      List<bool Function(Spot)>? filters
+      List<Filter>? filters
       }) : filters = filters ?? [];
 
 
@@ -17,7 +17,7 @@ final class ReverseBeaconState {
       {ReverseBeaconFeed? reverseBeaconFeed,
       String? callsign,
       ReverseBeaconStatus? reverseBeaconStatus,
-      List<bool Function(Spot)>? filters}) {
+      List<Filter>? filters}) {
     return ReverseBeaconState(
         reverseBeaconFeed: reverseBeaconFeed ?? this.reverseBeaconFeed,
         callsign: callsign ?? this.callsign,

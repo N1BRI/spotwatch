@@ -60,7 +60,8 @@ class _FilterScreenState extends State<FilterScreen> {
                   _selectedBands[index] = !_selectedBands[index];
                 });
               },
-            )
+            ),
+             Chip(label: const Text('N1BRI'), onDeleted: () {return;},),
           ],
         ),
       ),

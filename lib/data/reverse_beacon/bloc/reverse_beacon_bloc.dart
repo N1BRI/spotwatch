@@ -13,8 +13,8 @@ class ReverseBeaconBloc extends Bloc<ReverseBeaconEvent, ReverseBeaconState> {
     on<ReverseBeaconConnected>((event, emit) async {
       await state.reverseBeaconFeed.connect(callsign: event.callsign);
       state.callsign = event.callsign;
-      // state.filters?.add(Filter(label: state.callsign.toUpperCase(),
-      // on:(spot) => spot.spottedCall.toUpperCase() == state.callsign.toUpperCase()));
+      state.filters?.add(Filter(label: state.callsign.toUpperCase(),
+      on:(spot) => spot.spottedCall.toUpperCase() == state.callsign.toUpperCase()));
       state.reverseBeaconFeed.subscription =
           state.reverseBeaconFeed.controller.stream.listen((spot) {
         add(ReverseBeaconSpotAvailable(spot));

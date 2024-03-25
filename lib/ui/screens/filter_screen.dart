@@ -9,19 +9,19 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
   final List<bool> _selectedBands = <bool>[
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
   ];
 
   static const List<Widget> bands = <Widget>[

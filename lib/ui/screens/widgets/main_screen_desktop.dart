@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotwatch/data/reverse_beacon/bloc/reverse_beacon_bloc.dart';
+import 'package:spotwatch/ui/screens/filter_screen.dart';
 import 'package:spotwatch/ui/screens/spots_map_screen.dart';
 import 'package:spotwatch/ui/screens/widgets/reverse_beacon_list.dart';
 
@@ -69,9 +70,9 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
         child:
             _isRunning ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
       )),
-      drawer: const Drawer(
+      drawer: const Drawer(width: 400,
         child: Column(
-          children: [Text('test')],
+          children: [FilterScreen()],
         ),
       ),
     );

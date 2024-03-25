@@ -16,7 +16,7 @@ class Spot{
   required this.time});  
 
   @override String toString() {
-    return '$skimmerCall heard $spottedCall on $frequency @ $db db going $wpm WPM';
+    return '$skimmerCall heard $spottedCall on $frequency \n @ $time @ $db db going $wpm WPM';
   }
 
 }

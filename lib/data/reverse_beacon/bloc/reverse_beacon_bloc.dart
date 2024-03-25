@@ -13,8 +13,8 @@ class ReverseBeaconBloc extends Bloc<ReverseBeaconEvent, ReverseBeaconState> {
     on<ReverseBeaconConnected>((event, emit) async {
       await state.reverseBeaconFeed.connect(callsign: event.callsign);
       state.callsign = event.callsign;
-      state.filters?.add(Filter(label: state.callsign.toUpperCase(),
-      on:(spot) => spot.spottedCall.toUpperCase() == state.callsign.toUpperCase()));
+      // state.filters?.add(Filter(label: state.callsign.toUpperCase(),
+      // on:(spot) => spot.spottedCall.toUpperCase() == state.callsign.toUpperCase()));
       state.reverseBeaconFeed.subscription =
           state.reverseBeaconFeed.controller.stream.listen((spot) {
         add(ReverseBeaconSpotAvailable(spot));
@@ -23,7 +23,7 @@ class ReverseBeaconBloc extends Bloc<ReverseBeaconEvent, ReverseBeaconState> {
 
     on<ReverseBeaconSpotAvailable>(
       (event, emit) {
-        if (state.filters!.isEmpty) { // note that the bloc uses a const constructor so this cannot be null
+        if (state.filters!.isEmpty) { // BANG! this bloc uses a const constructor with a new collection on creation so this cannot be null
           state.reverseBeaconFeed.beaconSpots.add(event.spot);
         } else {
           for (var filter in state.filters!) {

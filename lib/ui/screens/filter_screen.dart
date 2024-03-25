@@ -61,7 +61,12 @@ class _FilterScreenState extends State<FilterScreen> {
                 });
               },
             ),
-             Chip(label: const Text('N1BRI'), onDeleted: () {return;},),
+            Chip(
+              label: const Text('N1BRI'),
+              onDeleted: () {
+                return;
+              },
+            ),
           ],
         ),
       ),

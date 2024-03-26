@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotwatch/data/reverse_beacon/bloc/reverse_beacon_bloc.dart';
+import 'package:spotwatch/models/enums.dart';
 import 'package:spotwatch/ui/screens/widgets/reverse_beacon_list.dart';
 import 'package:spotwatch/ui/screens/spots_map_screen.dart';
 
@@ -70,6 +71,12 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _isRunning = BlocProvider.of<ReverseBeaconBloc>(context).state.reverseBeaconStatus != ReverseBeaconStatus.paused;
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -77,7 +84,7 @@ class _MainScreenMobileState extends State<MainScreenMobile> {
           .add(const ReverseBeaconListening());
     });
   }
-
+  
   void _toggleBeaconFeed() {
     setState(() {
       if (_isRunning) {

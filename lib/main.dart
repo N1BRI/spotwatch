@@ -1,6 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reverse_beacon/reverse_beacon.dart';
 import 'package:spotwatch/contracts/connectivity_service.dart';

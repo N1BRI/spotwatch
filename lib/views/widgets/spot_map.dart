@@ -20,6 +20,8 @@ class _SpotMapState extends State<SpotMap> {
   Widget build(BuildContext context) {
     return FlutterMap(
       options: MapOptions(
+        onPositionChanged: (position, hasGesture) {
+        },
         initialCenter:
             _geolocatorService.getUserLocation() ?? const LatLng(0, 0),
         initialZoom: 7.5,

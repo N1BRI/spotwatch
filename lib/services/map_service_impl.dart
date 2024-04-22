@@ -12,7 +12,7 @@ class MapServiceImpl extends ChangeNotifier
     implements MapService {
   final GeolocationService _geolocationService;
   final ReverseBeaconNodeService _reverseBeaconNodeService;
- // final MapController _mapController = MapController();
+  // final MapController _mapController = MapController();
   double _zoom = 8.0;
   LatLng _currentPosition = const LatLng(37.234332396, -115.80666344);
 
@@ -49,7 +49,20 @@ class MapServiceImpl extends ChangeNotifier
             point: b.latLng,
             width: 15,
             height: 15,
-            child: const Icon(Icons.settings_input_antenna_outlined, size: 16, color: Color(0xff2b87ff))))
+            child: const Icon(Icons.adjust_outlined,
+                size: 16, color: Color(0xff2b87ff))))
         .toList();
+  }
+  
+  @override
+  MapPosition getPosition() {
+    // TODO: implement getPosition
+    throw UnimplementedError();
+  }
+  
+  @override
+  MapPosition setPosition(MapPosition position) {
+    // TODO: implement setPosition
+    throw UnimplementedError();
   }
 }

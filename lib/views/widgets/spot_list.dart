@@ -3,6 +3,7 @@ import 'package:spotwatch/contracts/reverse_beacon_service.dart';
 import 'package:spotwatch/main.dart';
 import 'package:spotwatch/views/widgets/band_badge.dart';
 import 'package:spotwatch/views/widgets/mode_badge.dart';
+import 'package:spotwatch/views/widgets/snr_badge.dart';
 
 class SpotList extends StatefulWidget {
   const SpotList({Key? key}) : super(key: key);
@@ -27,11 +28,26 @@ class _SpotListState extends State<SpotList> {
                 final spot = _reverseBeaconService.getSpot(index);
                 if (spot != null) {
                   return ListTile(
-                    title: Text('${spot.skimmerCall} - ${spot.spottedCall}'),
-                    dense: true,
-                    trailing: spot.band != null ? BandBadge(spotBand: spot.band!) : Container(),
-                    leading: ModeBadge(spotMode: spot.mode,),
-                    subtitle: Text('${spot.frequency} @ ${spot.time.hour}:${spot.time.minute}'),
+                    title: Text(spot.skimmerCall),
+                    trailing: SizedBox(
+                      width: 100,
+                      child: Row(
+                        children: [
+                          spot.band != null
+                              ? Padding(
+                                padding: const EdgeInsets.fromLTRB(0,0,8,0),
+                                child: BandBadge(spotBand: spot.band!),
+                              )
+                              : Container(),
+                              SnrBadge(snr: spot.db)
+                        ],
+                      ),
+                    ),
+                    leading: ModeBadge(
+                      spotMode: spot.mode,
+                    ),
+                    subtitle: Text(
+                        '${spot.frequency} @ ${spot.time.hour}:${spot.time.minute}'),
                   );
                 } else {
                   return Container();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-mixin Loadable on ChangeNotifier{
+mixin Loadable on ChangeNotifier {
   bool _isBusy = false;
 
   bool isLoading() {

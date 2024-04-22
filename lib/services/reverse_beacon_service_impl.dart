@@ -6,7 +6,8 @@ import 'package:spotwatch/contracts/loadable.dart';
 import 'package:spotwatch/contracts/reverse_beacon_service.dart';
 import 'package:spotwatch/models/filter.dart';
 
-class ReverseBeaconServiceImpl extends ChangeNotifier with Loadable
+class ReverseBeaconServiceImpl extends ChangeNotifier
+    with Loadable
     implements ReverseBeaconService {
   final ReverseBeacon reverseBeacon;
   final List<Spot> spots = [];
@@ -66,6 +67,12 @@ class ReverseBeaconServiceImpl extends ChangeNotifier with Loadable
     try {
       await reverseBeacon.connect(callsign: callsign);
       _subscription = reverseBeacon.listen((spot) => addSpot(spot));
+      // filters.add(Filter(
+      //   label: callsign,
+      //   on: (p0) {
+      //     return p0.spottedCall.toUpperCase() == callsign.toUpperCase();
+      //   },
+      // ));
       success = true;
     } catch (_) {}
     setLoadingState(false);

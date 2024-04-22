@@ -16,8 +16,8 @@ Color spotModeToColor(Mode mode) {
   }
 }
 
-Color spotBandToColor(Band band){
-  switch(band){
+Color spotBandToColor(Band band) {
+  switch (band) {
     case Band.meters160:
       return const Color(0xffc85c4f);
     case Band.meters80:
@@ -47,9 +47,8 @@ Color spotBandToColor(Band band){
     case Band.centimeters70:
       return const Color(0xffeae0d5);
     case Band.centimeters33:
-      return const Color(0xfff694c1); 
+      return const Color(0xfff694c1);
     case Band.centimeters23:
       return const Color(0xffff312e);
   }
 }
-

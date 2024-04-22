@@ -10,7 +10,7 @@ class ConnectivityServiceImpl extends ChangeNotifier
   final Connectivity connectivity;
   late StreamSubscription<List<ConnectivityResult>> connectivitySubscription;
 
-  ConnectivityServiceImpl({required this.connectivity}){
+  ConnectivityServiceImpl({required this.connectivity}) {
     connectivitySubscription =
         Connectivity().onConnectivityChanged.listen(connectionStatusChanged);
   }

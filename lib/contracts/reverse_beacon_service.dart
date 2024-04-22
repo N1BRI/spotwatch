@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reverse_beacon/reverse_beacon.dart';
 import 'package:spotwatch/models/filter.dart';
 
-abstract class ReverseBeaconService extends ChangeNotifier{
+abstract class ReverseBeaconService extends ChangeNotifier {
   Spot? getSpot(int index);
   void addSpot(Spot spot);
   void removeSpot(Spot spot);

@@ -44,7 +44,7 @@ class BandBadge extends StatelessWidget {
         text = '23cm';
     }
     return Container(
-      width: 50,
+      width: 60,
       height: 30,
       decoration: BoxDecoration(
           color: bg,

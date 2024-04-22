@@ -4,7 +4,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:spotwatch/contracts/geolocation_service.dart';
 import 'package:spotwatch/contracts/loadable.dart';
 
-class GeolocationServiceImpl extends ChangeNotifier with Loadable
+class GeolocationServiceImpl extends ChangeNotifier
+    with Loadable
     implements GeolocationService {
   LatLng? position;
   GeolocationServiceImpl();
@@ -20,14 +21,15 @@ class GeolocationServiceImpl extends ChangeNotifier with Loadable
     return status == LocationPermission.always ||
         status == LocationPermission.whileInUse;
   }
-  
+
   @override
-  Future<LatLng?> setUserLocation() async{
-    var currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  Future<LatLng?> setUserLocation() async {
+    var currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     position = LatLng(currentPosition.latitude, currentPosition.longitude);
     return position;
   }
-  
+
   @override
   LatLng? getUserLocation() {
     return position;

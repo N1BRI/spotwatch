@@ -18,10 +18,11 @@ class _DisconnectedScreenState extends State<DisconnectedScreen>
   }
 
   Future<void> _checkLocationPermission() async {
-     var status = await Geolocator.checkPermission();
+    var status = await Geolocator.checkPermission();
     await Future.delayed(const Duration(milliseconds: 800));
 
-    if (status == LocationPermission.always || status == LocationPermission.whileInUse ) {
+    if (status == LocationPermission.always ||
+        status == LocationPermission.whileInUse) {
       setState(() {
         Navigator.pushNamed(context, '/');
       });

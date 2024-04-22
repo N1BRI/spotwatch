@@ -9,5 +9,5 @@ abstract class MapService extends ChangeNotifier with Loadable {
   void removeSpotMarker(Spot spot);
   List<Marker> getNodeMarkers();
   MapPosition getPosition();
-  MapPosition setPosition(MapPosition position);
+  void setPosition(MapPosition position);
 }

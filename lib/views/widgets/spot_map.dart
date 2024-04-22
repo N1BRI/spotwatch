@@ -14,17 +14,17 @@ class SpotMap extends StatefulWidget {
 }
 
 class _SpotMapState extends State<SpotMap> {
-  final _geolocatorService = getIt<GeolocationService>();
   final _mapService = getIt<MapService>();
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
       options: MapOptions(
         onPositionChanged: (position, hasGesture) {
+          _mapService.setPosition(position);
         },
         initialCenter:
-            _geolocatorService.getUserLocation() ?? const LatLng(0, 0),
-        initialZoom: 7.5,
+            _mapService.getPosition().center ?? const LatLng(0.0, 0.0),
+        initialZoom: _mapService.getPosition().zoom ?? 8.0,
       ),
       children: [
         TileLayer(

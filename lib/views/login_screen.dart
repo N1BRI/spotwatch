@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:reverse_beacon/reverse_beacon.dart';
 import 'package:spotwatch/contracts/geolocation_service.dart';
+import 'package:spotwatch/contracts/map_service.dart';
 import 'package:spotwatch/contracts/reverse_beacon_node_service.dart';
 import 'package:spotwatch/contracts/reverse_beacon_service.dart';
 import 'package:spotwatch/main.dart';
-import 'package:spotwatch/services/reverse_beacon_node_service_impl.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class LoginScreenState extends State<LoginScreen> {
   final _reverseBeaconService = getIt<ReverseBeaconService>();
   final _geolocatorService = getIt<GeolocationService>();
   final _reverseBeaconNodeService = getIt<ReverseBeaconNodeService>();
+  final _mapService = getIt<MapService>();
   bool _isValidCallsign = false;
   String? _callsign;
 
@@ -159,7 +161,8 @@ class LoginScreenState extends State<LoginScreen> {
         Navigator.pushNamed(context, '/disconnected');
       });
     } else {
-      await _geolocatorService.setUserLocation();
+      var coords = await _geolocatorService.setUserLocation();
+      _mapService.setPosition(MapPosition(center: coords, zoom: 8.0));
     }
   }
 }

@@ -6,6 +6,7 @@ import 'package:spotwatch/contracts/geolocation_service.dart';
 import 'package:spotwatch/contracts/loadable.dart';
 import 'package:spotwatch/contracts/map_service.dart';
 import 'package:spotwatch/contracts/reverse_beacon_node_service.dart';
+import 'package:spotwatch/core/extensions/map_extensions.dart';
 
 class MapServiceImpl extends ChangeNotifier
     with Loadable
@@ -13,8 +14,7 @@ class MapServiceImpl extends ChangeNotifier
   final GeolocationService _geolocationService;
   final ReverseBeaconNodeService _reverseBeaconNodeService;
   // final MapController _mapController = MapController();
-  double _zoom = 8.0;
-  LatLng _currentPosition = const LatLng(37.234332396, -115.80666344);
+  MapPosition _mapPosition = const MapPosition(zoom: 8.0, center: LatLng(37.234332396, -115.80666344));
 
   MapServiceImpl(
       {required ReverseBeaconNodeService reverseBeaconNodeService,
@@ -22,7 +22,7 @@ class MapServiceImpl extends ChangeNotifier
       : _geolocationService = geolocationService,
         _reverseBeaconNodeService = reverseBeaconNodeService {
     var location = _geolocationService.getUserLocation();
-    _currentPosition = location ?? _currentPosition;
+   _mapPosition = _mapPosition.copyWith(center: location);
   }
 
   @override
@@ -56,13 +56,11 @@ class MapServiceImpl extends ChangeNotifier
   
   @override
   MapPosition getPosition() {
-    // TODO: implement getPosition
-    throw UnimplementedError();
+    return _mapPosition;
   }
   
   @override
-  MapPosition setPosition(MapPosition position) {
-    // TODO: implement setPosition
-    throw UnimplementedError();
+  void setPosition(MapPosition position) {
+    _mapPosition = position;
   }
 }

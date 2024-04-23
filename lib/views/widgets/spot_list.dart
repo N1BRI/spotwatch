@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spotwatch/contracts/reverse_beacon_service.dart';
 import 'package:spotwatch/main.dart';
 import 'package:spotwatch/views/widgets/spot_tile.dart';
+import 'package:spotwatch/views/widgets/test_tile.dart';
 
 class SpotList extends StatefulWidget {
   const SpotList({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _SpotListState extends State<SpotList> {
               itemBuilder: (context, index) {
                 final spot = _reverseBeaconService.getSpot(index);
                 if (spot != null) {
-                  return SpotTile(spot: spot);
+                  return TestTile(spot: spot);
                 } else {
                   return Container();
                 }

@@ -45,6 +45,7 @@ dependencies:
   html: ^0.15.4
   gridlocator: ^0.0.3
   http: ^1.2.1
+  intl: ^0.19.0
 
 
 dev_dependencies:
@@ -64,6 +65,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+  connectivity_plus_platform_interface: any
 flutter:
 
   # The following line ensures that the Material Icons font is

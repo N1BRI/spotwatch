@@ -14,7 +14,8 @@ class MapServiceImpl extends ChangeNotifier
   final GeolocationService _geolocationService;
   final ReverseBeaconNodeService _reverseBeaconNodeService;
   // final MapController _mapController = MapController();
-  MapPosition _mapPosition = const MapPosition(zoom: 8.0, center: LatLng(37.234332396, -115.80666344));
+  MapPosition _mapPosition =
+      const MapPosition(zoom: 8.0, center: LatLng(37.234332396, -115.80666344));
 
   MapServiceImpl(
       {required ReverseBeaconNodeService reverseBeaconNodeService,
@@ -22,7 +23,7 @@ class MapServiceImpl extends ChangeNotifier
       : _geolocationService = geolocationService,
         _reverseBeaconNodeService = reverseBeaconNodeService {
     var location = _geolocationService.getUserLocation();
-   _mapPosition = _mapPosition.copyWith(center: location);
+    _mapPosition = _mapPosition.copyWith(center: location);
   }
 
   @override
@@ -53,12 +54,12 @@ class MapServiceImpl extends ChangeNotifier
                 size: 16, color: Color(0xff2b87ff))))
         .toList();
   }
-  
+
   @override
   MapPosition getPosition() {
     return _mapPosition;
   }
-  
+
   @override
   void setPosition(MapPosition position) {
     _mapPosition = position;

@@ -22,7 +22,7 @@ class ModeBadge extends StatelessWidget {
         return Container();
     }
     return Container(
-      width: 45,
+      width: 50,
       height: 30,
       decoration: BoxDecoration(
           color: bg,

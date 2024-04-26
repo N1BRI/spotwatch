@@ -20,9 +20,9 @@ class _SpotListState extends State<SpotList> {
         ListenableBuilder(
           listenable: _reverseBeaconService,
           builder: (context, child) => Expanded(
-            child: ListView.separated(
+            child: ListView.builder(
               scrollDirection: Axis.vertical,
-              shrinkWrap: false,
+              shrinkWrap: true,
               itemBuilder: (context, index) {
                 final spot = _reverseBeaconService.getSpot(index);
                 if (spot != null) {
@@ -31,9 +31,8 @@ class _SpotListState extends State<SpotList> {
                   return Container();
                 }
               },
-              itemCount: _reverseBeaconService.getSpotCount(), separatorBuilder: (BuildContext context, int index) { 
-                return const Divider();
-               },
+              itemCount: _reverseBeaconService.getSpotCount(), 
+              
             ),
           ),
         ),

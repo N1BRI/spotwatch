@@ -55,7 +55,7 @@ class DesktopViewState extends State<DesktopView> {
       body: Row(
         children: [
           Expanded(
-              flex: 2,
+              flex: 3,
               child: Container(
                   width: 700,
                   padding: const EdgeInsets.all(8.0),
@@ -65,7 +65,7 @@ class DesktopViewState extends State<DesktopView> {
                               color: Color.fromARGB(221, 211, 211, 211),
                               width: 2))),
                   child: const SpotList())),
-          const Expanded(flex: 6, child: SpotMap())
+          const Expanded(flex: 7, child: SpotMap())
         ],
       ),
     );

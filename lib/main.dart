@@ -29,7 +29,7 @@ void main() {
   getIt.registerSingleton<GeolocationService>(GeolocationServiceImpl());
   getIt.registerSingleton<ReverseBeaconNodeService>(
       ReverseBeaconNodeServiceImpl());
-  getIt.registerSingleton<MapService>(MapServiceImpl(
+  getIt.registerSingleton<MapService>(MapServiceImpl(reverseBeaconService:  getIt<ReverseBeaconService>(),
       reverseBeaconNodeService: getIt<ReverseBeaconNodeService>(),
       geolocationService: getIt<GeolocationService>()));
   getIt.registerSingleton<SpotList>(const SpotList());

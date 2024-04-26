@@ -33,7 +33,7 @@ void main() {
         time: DateTime.now(),
         spotType: SpotType.cq);
     service.addSpot(spot);
-    expect(service.spots, contains(spot));
+    expect(service.getSpots(), contains(spot));
   });
 
   test(
@@ -57,7 +57,7 @@ void main() {
       },
     ));
     service.addSpot(spot);
-    expect(service.spots.isEmpty, true);
+    expect(service.getSpots().isEmpty, true);
   });
 
   test(
@@ -81,6 +81,6 @@ void main() {
       },
     ));
     service.addSpot(spot);
-    expect(service.spots, contains(spot));
+    expect(service.getSpots(), contains(spot));
   });
 }

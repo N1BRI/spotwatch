@@ -28,7 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth > 1000) {
+        if (constraints.maxWidth > 1200) {
           return const DesktopView();
         } else {
           return const MobileView();

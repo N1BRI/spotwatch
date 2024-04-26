@@ -10,29 +10,30 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
     with Loadable
     implements ReverseBeaconService {
   final ReverseBeacon reverseBeacon;
-  final List<Spot> spots = [];
+  final List<Spot> _spots = [];
   final List<Filter> filters = [];
   final int rollingSpotCount;
+  String? _callsign;
   StreamSubscription<Spot>? _subscription;
 
   ReverseBeaconServiceImpl(
-      {required this.reverseBeacon, this.rollingSpotCount = 20});
+      {required this.reverseBeacon, this.rollingSpotCount = 50});
 
   @override
   void addSpot(Spot spot) {
     if (filters.isEmpty) {
-      spots.add(spot);
+      _spots.add(spot);
       notifyListeners();
-      if (spots.length == rollingSpotCount) {
-        removeSpot(spots.removeAt(0));
+      if (_spots.length == rollingSpotCount) {
+        removeSpot(_spots.removeAt(0));
       }
     } else {
       for (var filter in filters) {
-        if (filter.on(spot) && !spots.contains(spot)) {
-          spots.add(spot);
+        if (filter.on(spot) && !_spots.contains(spot)) {
+          _spots.add(spot);
           notifyListeners();
-          if (spots.length == rollingSpotCount) {
-            removeSpot(spots.removeAt(0));
+          if (_spots.length == rollingSpotCount) {
+            removeSpot(_spots.removeAt(0));
           }
         }
       }
@@ -41,7 +42,7 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
 
   @override
   void removeSpot(Spot spot) {
-    spots.remove(spot);
+    _spots.remove(spot);
     notifyListeners();
   }
 
@@ -63,9 +64,10 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
 
   @override
   Future<bool> connect(String callsign) async {
+    this._callsign = callsign;
     bool success = false;
     try {
-      await reverseBeacon.connect(callsign: callsign);
+      await reverseBeacon.connect(callsign: this._callsign);
       _subscription = reverseBeacon.listen((spot) => addSpot(spot));
       // filters.add(Filter(
       //   label: callsign,
@@ -97,19 +99,29 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
 
   @override
   Spot? getSpot(int index) {
-    if (spots.isNotEmpty && index > 0 && index < spots.length - 1) {
-      return spots[index];
+    if (_spots.isNotEmpty && index > 0 && index < _spots.length - 1) {
+      return _spots[index];
     }
     return null;
   }
 
   @override
   int getSpotCount() {
-    return spots.length;
+    return _spots.length;
   }
 
   @override
   bool? isStreamPaused() {
     return _subscription?.isPaused;
+  }
+  
+  @override
+  List<Spot> getSpots() {
+    return _spots;
+  }
+  
+  @override
+  String? getCallsign() {
+    return _callsign;
   }
 }

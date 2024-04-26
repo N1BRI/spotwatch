@@ -5,9 +5,9 @@ import 'package:spotwatch/contracts/loadable.dart';
 
 abstract class MapService extends ChangeNotifier with Loadable {
   MapController getMapController();
-  void addSpotMarker(Spot spot);
-  void removeSpotMarker(Spot spot);
+  List<Marker> getSpotLayer(List<Spot> spots);
   List<Marker> getNodeMarkers();
   MapPosition getPosition();
   void setPosition(MapPosition position);
+  double? getSpotDistanceMeters(Spot spottedCall);
 }

@@ -13,7 +13,9 @@ abstract class ReverseBeaconService extends ChangeNotifier {
   void pause();
   void resume();
   void cancel();
+  List<Spot> getSpots();
   bool isLoading();
   void setLoadingState(bool isLoading);
   bool? isStreamPaused();
+  String? getCallsign();
 }

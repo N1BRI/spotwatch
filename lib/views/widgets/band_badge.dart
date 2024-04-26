@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reverse_beacon/reverse_beacon.dart';
+import 'package:spotwatch/core/color_helpers.dart';
 
 class BandBadge extends StatelessWidget {
   const BandBadge({Key? key, required this.spotBand}) : super(key: key);
@@ -8,54 +9,59 @@ class BandBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var text = '';
-    Color bg = const Color(0xff2b87ff);
+    Color bg = spotBandToColor(spotBand);
+    Color font = Colors.white;
     switch (spotBand) {
       case Band.meters160:
-        text = '160m';
+        text = '160';
       case Band.meters80:
-        text = '80m';
+        text = '80';
       case Band.meters60:
-        text = '60m';
+        text = '60';
       case Band.meters40:
-        text = '40m';
+        text = '40';
       case Band.meters30:
-        text = '30m';
+        text = '30';
       case Band.meters20:
-        text = '20m';
+        text = '20';
       case Band.meters17:
-        text = '17m';
+        text = '17';
       case Band.meters15:
-        text = '15m';
+        text = '15';
       case Band.meters12:
-        text = '12m';
+        text = '12';
       case Band.meters10:
-        text = '10m';
+        text = '10';
       case Band.meters6:
-        text = '6m';
+        text = '6';
+        font = Colors.black;
       case Band.meters2:
-        text = '2m';
+        text = '2';
+        font = Colors.black;
       case Band.meters125:
-        text = '1.25m';
+        text = '1.25';
+        font = Colors.black;
       case Band.centimeters70:
-        text = '70cm';
+        text = '70';
+        font = Colors.black;
       case Band.centimeters33:
-        text = '33cm';
+        text = '33';
+        font = Colors.black;
       case Band.centimeters23:
-        text = '23cm';
+        text = '23';
+        font = Colors.black;
     }
     return Container(
-      width: 60,
-      height: 30,
+      width: 20,
+      height: 20,
       decoration: BoxDecoration(
           color: bg,
-          borderRadius: const BorderRadius.all(
-            Radius.elliptical(13, 13),
-          )),
+         ),
       child: Center(
         child: Text(
           text,
-          style: const TextStyle(
-              fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600),
+          style:  TextStyle(
+              fontSize: 8, color: font, fontWeight: FontWeight.bold),
         ),
       ),
     );

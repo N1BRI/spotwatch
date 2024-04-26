@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:spotwatch/contracts/loadable.dart';
 import 'package:spotwatch/contracts/reverse_beacon_node_service.dart';
 import 'dart:async';
@@ -45,5 +46,11 @@ class ReverseBeaconNodeServiceImpl extends ChangeNotifier
   @override
   List<Node> getBeacons() {
     return _nodes;
+  }
+
+  @override
+  LatLng getLatLngByCallsign(String callsign) {
+    var match = _nodes.where((n) => n.callsign.toUpperCase() == callsign.toUpperCase()).firstOrNull!;
+    return match.latLng;
   }
 }

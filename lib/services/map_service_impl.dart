@@ -21,6 +21,7 @@ class MapServiceImpl extends ChangeNotifier
   // final MapController _mapController = MapController();
   MapPosition _mapPosition =
       const MapPosition(zoom: 8.0, center: LatLng(37.234332396, -115.80666344));
+  bool _showBeacons = true;
 
   MapServiceImpl(
       {required ReverseBeaconService reverseBeaconService,
@@ -115,5 +116,15 @@ class MapServiceImpl extends ChangeNotifier
       }
     }
     return markers;
+  }
+  
+  @override
+  bool getShowBeacons() {
+    return _showBeacons;
+  }
+  
+  @override
+  void setShowBeacons(bool status) {
+    _showBeacons = status;
   }
 }

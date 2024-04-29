@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotwatch/contracts/reverse_beacon_service.dart';
 import 'package:spotwatch/main.dart';
+import 'package:spotwatch/views/widgets/filter_drawer.dart';
 import 'package:spotwatch/views/widgets/spot_list.dart';
 import 'package:spotwatch/views/widgets/spot_map.dart';
 
@@ -66,11 +67,7 @@ class MobileViewState extends State<MobileView> {
         selectedItemColor: const Color.fromARGB(255, 43, 135, 255),
         onTap: _onItemTapped,
       ),
-      drawer: const Drawer(
-        child: Column(
-          children: [Text('test')],
-        ),
-      ),
+      drawer: const FilterDrawer(),
     );
   }
 

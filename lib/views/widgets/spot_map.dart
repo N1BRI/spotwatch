@@ -17,7 +17,6 @@ class SpotMap extends StatefulWidget {
 class _SpotMapState extends State<SpotMap> {
   final _mapService = getIt<MapService>();
   final _reverseBeaconService = getIt<ReverseBeaconService>();
-  bool _showBeacons = true;
   final MaterialStateProperty<Icon?> thumbIcon =
       MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
@@ -40,7 +39,7 @@ class _SpotMapState extends State<SpotMap> {
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           userAgentPackageName: 'com.spotwatch.app',
         ),
-        _showBeacons
+        _mapService.getShowBeacons()
             ? MarkerLayer(
                 markers: _mapService.getNodeMarkers(),
               )
@@ -66,16 +65,16 @@ class _SpotMapState extends State<SpotMap> {
           ),
         ),
         Switch(thumbIcon: thumbIcon,
-          value: _showBeacons,
+          value: _mapService.getShowBeacons(),
           onChanged: (value) {
             setState(() {
-              _showBeacons = value;
+              _mapService.setShowBeacons(value);
             });
           },
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(70, 12, 0,0),
-          child: const BandLegend(),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(70, 12, 0,0),
+          child: BandLegend(),
         ),
       ],
     );

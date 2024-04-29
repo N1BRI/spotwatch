@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotwatch/contracts/reverse_beacon_service.dart';
 import 'package:spotwatch/main.dart';
+import 'package:spotwatch/views/widgets/filter_drawer.dart';
 import 'package:spotwatch/views/widgets/spot_list.dart';
 import 'package:spotwatch/views/widgets/spot_map.dart';
 
@@ -37,12 +38,7 @@ class DesktopViewState extends State<DesktopView> {
           textAlign: TextAlign.justify,
         ),
       ),
-      drawer: const Drawer(
-        width: 400,
-        child: Column(
-          children: [Text("Drawer")],
-        ),
-      ),
+      drawer: const FilterDrawer(),
       floatingActionButton: Padding(
         padding: const EdgeInsets.fromLTRB(0, 70, 0, 0),
         child: FloatingActionButton(

@@ -10,4 +10,6 @@ abstract class MapService extends ChangeNotifier with Loadable {
   MapPosition getPosition();
   void setPosition(MapPosition position);
   double? getSpotDistanceMeters(Spot spottedCall);
+  void setShowBeacons(bool status);
+  bool getShowBeacons();
 }

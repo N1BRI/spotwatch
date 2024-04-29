@@ -10,8 +10,8 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
     with Loadable
     implements ReverseBeaconService {
   final ReverseBeacon reverseBeacon;
-  final List<Spot> _spots = [];
-  final List<Filter> filters = [];
+  List<Spot> _spots = [];
+  final List<Filter> _filters = [];
   final int rollingSpotCount;
   String? _callsign;
   StreamSubscription<Spot>? _subscription;
@@ -21,14 +21,14 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
 
   @override
   void addSpot(Spot spot) {
-    if (filters.isEmpty) {
+    if (_filters.isEmpty) {
       _spots.add(spot);
       notifyListeners();
       if (_spots.length == rollingSpotCount) {
         removeSpot(_spots.removeAt(0));
       }
     } else {
-      for (var filter in filters) {
+      for (var filter in _filters) {
         if (filter.on(spot) && !_spots.contains(spot)) {
           _spots.add(spot);
           notifyListeners();
@@ -48,18 +48,30 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
 
   @override
   void addFilter(Filter filter) {
-    if (!filters.contains(filter)) {
-      filters.add(filter);
-      notifyListeners();
+    List<Spot> filteredSpots = [];
+    if (!_filters.contains(filter)) {
+      _filters.add(filter);
     }
+    for (var f = 0; f < _filters.length; f++) {
+      for (var s = 0; s < _spots.length; s++) {
+        if (_filters[f].on(_spots[s])) {
+          filteredSpots.add(_spots[s]);
+        }
+      }
+    }
+    _spots = filteredSpots;
+    notifyListeners();
   }
 
   @override
   void removeFilter(Filter filter) {
-    if (!filters.contains(filter)) {
-      filters.remove(filter);
-      notifyListeners();
+    if (_filters.contains(filter)) {
+      _filters.remove(filter);
     }
+    _spots.removeWhere((s) {
+      return filter.on(s);
+    });
+    notifyListeners();
   }
 
   @override
@@ -69,12 +81,13 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
     try {
       await reverseBeacon.connect(callsign: this._callsign);
       _subscription = reverseBeacon.listen((spot) => addSpot(spot));
-      // filters.add(Filter(
-      //   label: callsign,
-      //   on: (p0) {
-      //     return p0.spottedCall.toUpperCase() == callsign.toUpperCase();
-      //   },
-      // ));
+      _filters.add(Filter(
+        label: callsign,
+        type: FilterType.callsign,
+        on: (p0) {
+          return p0.spottedCall.toUpperCase() == callsign.toUpperCase();
+        },
+      ));
       success = true;
     } catch (_) {}
     setLoadingState(false);
@@ -114,14 +127,27 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
   bool? isStreamPaused() {
     return _subscription?.isPaused;
   }
-  
+
   @override
   List<Spot> getSpots() {
     return _spots;
   }
-  
+
   @override
   String? getCallsign() {
     return _callsign;
+  }
+
+  @override
+  List<Filter> getFilters({FilterType? filterType}) {
+    if (filterType != null) {
+      return _filters.where((f) => f.type == filterType).toList();
+    }
+    return _filters;
+  }
+
+  @override
+  void flushSpots() {
+    _spots = [];
   }
 }

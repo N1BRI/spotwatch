@@ -20,7 +20,8 @@ class _SpotListState extends State<SpotList> {
         ListenableBuilder(
           listenable: _reverseBeaconService,
           builder: (context, child) => Expanded(
-            child: ListView.builder(
+            child:
+            _reverseBeaconService.getSpotCount() == 0 ? const Text('Listening for spots...') : ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemBuilder: (context, index) {

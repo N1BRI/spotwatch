@@ -6,6 +6,7 @@ abstract class ReverseBeaconService extends ChangeNotifier {
   Spot? getSpot(int index);
   void addSpot(Spot spot);
   void removeSpot(Spot spot);
+  void flushSpots();
   void addFilter(Filter filter);
   void removeFilter(Filter filter);
   int getSpotCount();
@@ -14,6 +15,7 @@ abstract class ReverseBeaconService extends ChangeNotifier {
   void resume();
   void cancel();
   List<Spot> getSpots();
+  List<Filter> getFilters({FilterType? filterType});
   bool isLoading();
   void setLoadingState(bool isLoading);
   bool? isStreamPaused();

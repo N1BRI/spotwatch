@@ -50,6 +50,7 @@ void main() {
         time: DateTime.now(),
         spotType: SpotType.cq);
     service.addFilter(Filter(
+      type: FilterType.other,
       label: '25+ WPM',
       on: (spot) {
         var s = spot as CWSpot;
@@ -74,6 +75,7 @@ void main() {
         time: DateTime.now(),
         spotType: SpotType.cq);
     service.addFilter(Filter(
+      type: FilterType.other,
       label: '25+ WPM',
       on: (spot) {
         var s = spot as CWSpot;

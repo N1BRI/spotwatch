@@ -15,7 +15,7 @@ abstract class ReverseBeaconService extends ChangeNotifier {
   void resume();
   void cancel();
   List<Spot> getSpots();
-  List<Filter> getFilters({FilterType? filterType});
+  List<Filter> getFilters({required FilterType filterType});
   bool isLoading();
   void setLoadingState(bool isLoading);
   bool? isStreamPaused();

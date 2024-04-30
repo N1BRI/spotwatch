@@ -7,7 +7,7 @@ class Filter {
 
   Filter({required this.label, required this.on, required this.type});
 
-  static Filter fromCallsign(String callsign) {
+  static Filter fromCallsign(String callsign, int precedence) {
     return Filter(
         label: callsign,
         on: (c) {
@@ -17,4 +17,4 @@ class Filter {
   }
 }
 
-enum FilterType { callsign, band, mode, geographic }
+enum FilterType { callsign, band, mode, geographic, other }

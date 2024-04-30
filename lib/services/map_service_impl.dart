@@ -20,7 +20,7 @@ class MapServiceImpl extends ChangeNotifier
   final ReverseBeaconNodeService _reverseBeaconNodeService;
   // final MapController _mapController = MapController();
   MapPosition _mapPosition =
-      const MapPosition(zoom: 8.0, center: LatLng(37.234332396, -115.80666344));
+      const MapPosition(zoom: 12.0, center: LatLng(37.234332396, -115.80666344));
   bool _showBeacons = true;
 
   MapServiceImpl(

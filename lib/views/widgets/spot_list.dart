@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spotwatch/contracts/reverse_beacon_service.dart';
 import 'package:spotwatch/main.dart';
 import 'package:spotwatch/views/widgets/spot_tile.dart';
-import 'package:spotwatch/views/widgets/spot_tile.dart';
+
 
 class SpotList extends StatefulWidget {
   const SpotList({Key? key}) : super(key: key);
@@ -21,7 +21,10 @@ class _SpotListState extends State<SpotList> {
           listenable: _reverseBeaconService,
           builder: (context, child) => Expanded(
             child:
-            _reverseBeaconService.getSpotCount() == 0 ? const Text('Listening for spots...') : ListView.builder(
+            _reverseBeaconService.getSpotCount() == 0 ? const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(child: Text('Listening for spots...')),
+            ) : ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemBuilder: (context, index) {

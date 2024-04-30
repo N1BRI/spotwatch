@@ -142,7 +142,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   void _connect() async {
     if (isValidCallsign(_callsign)) {
-      if (await _reverseBeaconService.connect(_callsign!)) {
+      if (await _reverseBeaconService.connect(_callsign!.replaceAll(' ', '').toUpperCase())) {
         if (await _reverseBeaconNodeService.loadBeacons()) {
           setState(() {
             Navigator.pushNamed(context, '/main');

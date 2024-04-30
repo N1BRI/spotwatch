@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spotwatch/views/widgets/band_filter_control.dart';
 import 'package:spotwatch/views/widgets/callsign_filter_control.dart';
+import 'package:spotwatch/views/widgets/mode_filter_control.dart';
 
 class FilterDrawer extends StatefulWidget {
   const FilterDrawer({Key? key}) : super(key: key);
@@ -22,7 +24,9 @@ class FilterDrawerState extends State<FilterDrawer> {
               style: TextStyle(fontSize: 20),
             ),
           ),
-          CallsignFilterControl()
+          CallsignFilterControl(),
+          BandFilterControl(),
+          ModeFilterControl()
         ],
       ),
     );

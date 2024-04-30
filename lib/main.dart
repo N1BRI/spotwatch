@@ -23,7 +23,7 @@ final getIt = GetIt.instance;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   getIt.registerSingleton<ReverseBeaconService>(
-      ReverseBeaconServiceImpl(reverseBeacon: ReverseBeacon()));
+      ReverseBeaconServiceImpl(rollingSpotCount: 25, reverseBeacon: ReverseBeacon()));
   getIt.registerSingleton<ConnectivityService>(
       ConnectivityServiceImpl(connectivity: Connectivity()));
   getIt.registerSingleton<GeolocationService>(GeolocationServiceImpl());

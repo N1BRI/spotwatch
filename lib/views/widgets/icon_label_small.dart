@@ -4,7 +4,7 @@ class IconLabelSmall extends StatelessWidget {
   const IconLabelSmall({Key? key, this.maxWidth = 30.0, required this.icon, required this.labelText})
       : super(key: key);
   final Icon icon;
-  final Text labelText;
+  final SelectableText labelText;
   final double maxWidth;
   @override
   Widget build(BuildContext context) {

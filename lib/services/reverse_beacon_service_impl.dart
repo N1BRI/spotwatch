@@ -11,31 +11,61 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
     implements ReverseBeaconService {
   final ReverseBeacon reverseBeacon;
   List<Spot> _spots = [];
-  final List<Filter> _filters = [];
+  final List<Filter> _callsignFilters = [];
+  final List<Filter> _bandFilters = [];
+  final List<Filter> _modeFilters = [];
   final int rollingSpotCount;
   String? _callsign;
   StreamSubscription<Spot>? _subscription;
 
   ReverseBeaconServiceImpl(
-      {required this.reverseBeacon, this.rollingSpotCount = 50});
+      {required this.reverseBeacon, this.rollingSpotCount = 15});
 
   @override
   void addSpot(Spot spot) {
-    if (_filters.isEmpty) {
+    bool matchesFilters = true;
+    if (_callsignFilters.isEmpty && _bandFilters.isEmpty && _modeFilters.isEmpty) {
       _spots.add(spot);
-      notifyListeners();
       if (_spots.length == rollingSpotCount) {
         removeSpot(_spots.removeAt(0));
       }
+      notifyListeners();
+      return;
     } else {
-      for (var filter in _filters) {
+      for (var filter in _callsignFilters) {
         if (filter.on(spot) && !_spots.contains(spot)) {
-          _spots.add(spot);
-          notifyListeners();
-          if (_spots.length == rollingSpotCount) {
-            removeSpot(_spots.removeAt(0));
+          matchesFilters = true;
+          break;
+        } else {
+          matchesFilters = false;
+        }
+      }
+      if (matchesFilters) {
+        for (var filter in _bandFilters) {
+          if (filter.on(spot) && !_spots.contains(spot)) {
+            matchesFilters = true;
+            break;
+          } else {
+            matchesFilters = false;
           }
         }
+      }
+      if (matchesFilters) {
+        for (var filter in _modeFilters) {
+          if (filter.on(spot) && !_spots.contains(spot)) {
+            matchesFilters = true;
+            break;
+          } else {
+            matchesFilters = false;
+          }
+        }
+      }
+      if (matchesFilters) {
+        _spots.add(spot);
+        if (_spots.length == rollingSpotCount) {
+          removeSpot(_spots.removeAt(0));
+        }
+        notifyListeners();
       }
     }
   }
@@ -49,15 +79,44 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
   @override
   void addFilter(Filter filter) {
     List<Spot> filteredSpots = [];
-    if (!_filters.contains(filter)) {
-      _filters.add(filter);
-    }
-    for (var f = 0; f < _filters.length; f++) {
-      for (var s = 0; s < _spots.length; s++) {
-        if (_filters[f].on(_spots[s])) {
-          filteredSpots.add(_spots[s]);
+    switch (filter.type) {
+      case FilterType.callsign:
+        if (!_callsignFilters.contains(filter)) {
+          _callsignFilters.add(filter);
+          for (var f = 0; f < _callsignFilters.length; f++) {
+            for (var s = 0; s < _spots.length; s++) {
+              if (_callsignFilters[f].on(_spots[s])) {
+                filteredSpots.add(_spots[s]);
+              }
+            }
+          }
         }
-      }
+      case FilterType.band:
+        if (!_bandFilters.contains(filter)) {
+          _bandFilters.add(filter);
+          for (var f = 0; f < _bandFilters.length; f++) {
+            for (var s = 0; s < _spots.length; s++) {
+              if (_bandFilters[f].on(_spots[s])) {
+                filteredSpots.add(_spots[s]);
+              }
+            }
+          }
+        }
+      case FilterType.mode:
+        if (!_modeFilters.contains(filter)) {
+          _modeFilters.add(filter);
+          for (var f = 0; f < _modeFilters.length; f++) {
+            for (var s = 0; s < _spots.length; s++) {
+              if (_modeFilters[f].on(_spots[s])) {
+                filteredSpots.add(_spots[s]);
+              }
+            }
+          }
+        }
+      case FilterType.geographic:
+      // TODO: Handle this case.
+      case FilterType.other:
+      // TODO: Handle this case.
     }
     _spots = filteredSpots;
     notifyListeners();
@@ -65,23 +124,54 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
 
   @override
   void removeFilter(Filter filter) {
-    if (_filters.contains(filter)) {
-      _filters.remove(filter);
+      
+    var orphanedSpots = _getOrphanedSpots(filter);
+    _spots.removeWhere((s) => orphanedSpots.any((os) => os == s));
+    switch(filter.type){
+      
+      case FilterType.callsign:
+         _callsignFilters.remove(filter);
+      case FilterType.band:
+        _bandFilters.remove(filter);
+      case FilterType.mode:
+        _modeFilters.remove(filter);
+      case FilterType.geographic:
+        // TODO: Handle this case.
+      case FilterType.other:
+        // TODO: Handle this case.
     }
-    _spots.removeWhere((s) {
-      return filter.on(s);
-    });
     notifyListeners();
+  }
+
+  List<Spot> _getOrphanedSpots(Filter filter){
+    List<Spot> orphanedSpots = [];
+    for(int i = 0; i < _spots.length; i++){
+      if(filter.on(_spots[i])){
+        orphanedSpots.add(_spots[i]);
+      }
+    }
+    for(int i = 0; i < orphanedSpots.length; i++){
+      if(_bandFilters.any((f) => f.on(orphanedSpots[i]))){
+        orphanedSpots.remove(orphanedSpots[i]);
+      }
+      if(_callsignFilters.any((f) => f.on(orphanedSpots[i]))){
+        orphanedSpots.remove(orphanedSpots[i]);
+      }
+      if(_modeFilters.any((f) => f.on(orphanedSpots[i]))){
+        orphanedSpots.remove(orphanedSpots[i]);
+      }
+    }
+    return orphanedSpots;
   }
 
   @override
   Future<bool> connect(String callsign) async {
-    this._callsign = callsign;
+    _callsign = callsign;
     bool success = false;
     try {
-      await reverseBeacon.connect(callsign: this._callsign);
+      await reverseBeacon.connect(callsign: _callsign);
       _subscription = reverseBeacon.listen((spot) => addSpot(spot));
-      _filters.add(Filter(
+      _callsignFilters.add(Filter(
         label: callsign,
         type: FilterType.callsign,
         on: (p0) {
@@ -112,7 +202,7 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
 
   @override
   Spot? getSpot(int index) {
-    if (_spots.isNotEmpty && index > 0 && index < _spots.length - 1) {
+    if (_spots.isNotEmpty && index >= 0 && index <= _spots.length - 1) {
       return _spots[index];
     }
     return null;
@@ -139,11 +229,19 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
   }
 
   @override
-  List<Filter> getFilters({FilterType? filterType}) {
-    if (filterType != null) {
-      return _filters.where((f) => f.type == filterType).toList();
+  List<Filter> getFilters({required FilterType filterType}) {
+    switch (filterType) {
+      case FilterType.callsign:
+        return _callsignFilters;
+      case FilterType.band:
+        return _bandFilters;
+      case FilterType.mode:
+        return _modeFilters;
+      case FilterType.geographic:
+        return [];
+      case FilterType.other:
+        return [];
     }
-    return _filters;
   }
 
   @override

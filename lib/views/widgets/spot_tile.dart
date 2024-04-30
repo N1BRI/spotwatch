@@ -36,7 +36,7 @@ class SpotTile extends StatelessWidget {
               const SizedBox(
                 width: 4,
               ),
-              Text(
+              SelectableText(
                 '${spot.skimmerCall} - ${spot.frequency} KHz - ${spot.mode.toString().split('.').last.toUpperCase()}',
                 style: const TextStyle(
                     fontSize: 14,
@@ -71,7 +71,7 @@ class SpotTile extends StatelessWidget {
                 color: Color(0xff40568d),
                 size: 15,
               ),
-              labelText: Text(
+              labelText: SelectableText(
                 spot.spottedCall.limitChars(6),
                 style: const TextStyle(
                     fontSize: 14,
@@ -86,7 +86,7 @@ class SpotTile extends StatelessWidget {
                 color: Color(0xff40568d),
                 size: 15,
               ),
-              labelText: Text(
+              labelText: SelectableText(
                 '${spot.db} dB',
                 style: const TextStyle(
                     fontSize: 14,
@@ -101,7 +101,7 @@ class SpotTile extends StatelessWidget {
                 color: Color(0xff40568d),
                 size: 15,
               ),
-              labelText: Text(
+              labelText: SelectableText(
                 DateFormat('HH:mm').format(spot.time),
                 style: const TextStyle(
                     fontSize: 14,
@@ -116,7 +116,7 @@ class SpotTile extends StatelessWidget {
                 color: Color(0xff40568d),
                 size: 15,
               ),
-              labelText: Text(
+              labelText: SelectableText(
                 spot.spotType.toString().split('.').last.toUpperCase(),
                 style: const TextStyle(
                     fontSize: 14,
@@ -132,7 +132,7 @@ class SpotTile extends StatelessWidget {
                       color: Color(0xff40568d),
                       size: 15,
                     ),
-                    labelText: Text(
+                    labelText: SelectableText(
                       (spot as DigiSpot).gridSquare ?? '--',
                       style: const TextStyle(
                           fontSize: 14,
@@ -147,7 +147,7 @@ class SpotTile extends StatelessWidget {
                       color: Color(0xff40568d),
                       size: 15,
                     ),
-                    labelText: Text(
+                    labelText: SelectableText(
                       spot.mode == Mode.cw
                           ? '${(spot as CWSpot).wpm.toString()} wpm'
                           : '--',
@@ -164,7 +164,7 @@ class SpotTile extends StatelessWidget {
                 color: Color(0xff40568d),
                 size: 17,
               ),
-              labelText: Text(
+              labelText: SelectableText(
                 distance,
                 style: const TextStyle(
                     fontSize: 14,

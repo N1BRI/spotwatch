@@ -75,7 +75,7 @@ class _CallsignFilterControlState extends State<CallsignFilterControl> {
                         if (callsign != null) {
                           if (isValidCallsign(callsign)) {
                             reverseBeaconService
-                                .addFilter(Filter.fromCallsign(callsign!));
+                                .addFilter(Filter.fromCallsign(callsign!, 0));
                             setState(() {
                               callsign = '';
                               validationMode = AutovalidateMode.disabled;

@@ -29,14 +29,18 @@ class _SpotMapState extends State<SpotMap> {
       options: MapOptions(
         onPositionChanged: (position, hasGesture) {
           _mapService.setPosition(position);
+        },cameraConstraint:  CameraConstraint.contain(bounds: LatLngBounds(const LatLng(85.039642,-192.0), const LatLng(-85.029508, 190.0))) ,
+        maxZoom: 12,
+        onPointerDown: (event, point) {
+          //print(point);
         },
         initialCenter:
             _mapService.getPosition().center ?? const LatLng(0.0, 0.0),
         initialZoom: _mapService.getPosition().zoom ?? 8.0,
       ),
       children: [
-        TileLayer(
-          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        TileLayer(retinaMode: RetinaMode.isHighDensity(context),
+          urlTemplate: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
           userAgentPackageName: 'com.spotwatch.app',
         ),
         _mapService.getShowBeacons()

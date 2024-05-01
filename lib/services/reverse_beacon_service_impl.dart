@@ -25,9 +25,9 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
   void addSpot(Spot spot) {
     bool matchesFilters = true;
     if (_callsignFilters.isEmpty && _bandFilters.isEmpty && _modeFilters.isEmpty) {
-      _spots.add(spot);
+      _spots.insert(0,spot);
       if (_spots.length == rollingSpotCount) {
-        removeSpot(_spots.removeAt(0));
+        removeSpot(_spots.removeAt(_spots.length - 1));
       }
       notifyListeners();
       return;
@@ -61,9 +61,9 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
         }
       }
       if (matchesFilters) {
-        _spots.add(spot);
+        _spots.insert(0,spot);
         if (_spots.length == rollingSpotCount) {
-          removeSpot(_spots.removeAt(0));
+          removeSpot(_spots.removeAt(_spots.length - 1));
         }
         notifyListeners();
       }
@@ -125,8 +125,6 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
   @override
   void removeFilter(Filter filter) {
       
-    var orphanedSpots = _getOrphanedSpots(filter);
-    _spots.removeWhere((s) => orphanedSpots.any((os) => os == s));
     switch(filter.type){
       
       case FilterType.callsign:
@@ -140,6 +138,8 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
       case FilterType.other:
         // TODO: Handle this case.
     }
+    var orphanedSpots = _getOrphanedSpots(filter);
+    _spots.removeWhere((s) => orphanedSpots.any((os) => os == s));
     notifyListeners();
   }
 

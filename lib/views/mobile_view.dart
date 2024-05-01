@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:spotwatch/contracts/reverse_beacon_service.dart';
 import 'package:spotwatch/main.dart';
 import 'package:spotwatch/views/widgets/filter_drawer.dart';
+import 'package:spotwatch/views/widgets/info_alert.dart';
 import 'package:spotwatch/views/widgets/spot_list.dart';
 import 'package:spotwatch/views/widgets/spot_map.dart';
 
@@ -30,7 +32,22 @@ class MobileViewState extends State<MobileView> {
             _scaffoldKey.currentState?.openDrawer();
           },
         ),
-        actions: const [IconButton(onPressed: null, icon: Icon(Icons.info))],
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await PackageInfo.fromPlatform().then(
+                  (packageInfo) {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => InfoAlert(
+                        packageInfo: packageInfo,
+                      ),
+                    );
+                  },
+                );
+              },
+              icon: const Icon(Icons.info))
+        ],
         backgroundColor: const Color.fromARGB(255, 43, 135, 255),
         foregroundColor: Colors.white,
         centerTitle: true,

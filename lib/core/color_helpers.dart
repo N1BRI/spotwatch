@@ -28,25 +28,25 @@ Color spotBandToColor(Band? band) {
     case Band.meters60:
       return const Color(0xfff3de8a); // Light orange
     case Band.meters40:
-      return Color.fromARGB(255, 243, 178, 33); // Orange
+      return const Color.fromARGB(255, 243, 178, 33); // Orange
     case Band.meters30:
-      return Color.fromARGB(255, 255, 204, 0); // Yellow
+      return const Color.fromARGB(255, 255, 204, 0); // Yellow
     case Band.meters20:
       return const Color(0xff2892d7); // Light blue
     case Band.meters17:
-      return Color.fromARGB(255, 102, 179, 221); // Teal blue
+      return const Color.fromARGB(255, 102, 179, 221); // Teal blue
     case Band.meters15:
-      return Color.fromARGB(255, 50, 47, 231); // Dark blue
+      return const Color.fromARGB(255, 50, 47, 231); // Dark blue
     case Band.meters12:
       return const Color(0xff04e762); // Teal
     case Band.meters10:
-      return Color.fromARGB(255, 85, 139, 178); // Dark blue-green
+      return const Color.fromARGB(255, 85, 139, 178); // Dark blue-green
     case Band.meters6:
-      return Color.fromARGB(255, 129, 255, 116); // Light green
+      return const Color.fromARGB(255, 129, 255, 116); // Light green
     case Band.meters2:
-      return Color.fromARGB(255, 228, 183, 195); // Light pink
+      return const Color.fromARGB(255, 228, 183, 195); // Light pink
     case Band.meters125:
-      return Color.fromARGB(255, 138, 223, 223); // Light blue-green
+      return const Color.fromARGB(255, 138, 223, 223); // Light blue-green
     case Band.centimeters70:
       return const Color(0xffeae0d5); // Light gray
     case Band.centimeters33:

@@ -17,6 +17,7 @@ import 'package:spotwatch/views/login_screen.dart';
 import 'package:spotwatch/views/main_screen.dart';
 import 'package:spotwatch/views/widgets/spot_list.dart';
 import 'package:spotwatch/views/widgets/spot_map.dart';
+import 'package:wakelock/wakelock.dart';
 
 final getIt = GetIt.instance;
 
@@ -34,6 +35,7 @@ void main() {
       geolocationService: getIt<GeolocationService>()));
   getIt.registerSingleton<SpotList>(const SpotList());
   getIt.registerSingleton<SpotMap>(const SpotMap());
+  Wakelock.enable();
   runApp(const MyApp());
 }
 

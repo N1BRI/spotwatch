@@ -6,6 +6,7 @@ import 'package:spotwatch/contracts/map_service.dart';
 import 'package:spotwatch/contracts/reverse_beacon_node_service.dart';
 import 'package:spotwatch/contracts/reverse_beacon_service.dart';
 import 'package:spotwatch/main.dart';
+import 'dart:io' show Platform;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -25,7 +26,11 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _checkLocationPermission();
+    if(Platform.isLinux){
+
+    }else{
+      _checkLocationPermission();
+    }
   }
 
   @override

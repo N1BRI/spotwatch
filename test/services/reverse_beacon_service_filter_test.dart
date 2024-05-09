@@ -595,7 +595,6 @@ void main() {
         label: '30',
         on: (spot) {
           return spot.band == Band.meters30;
-          ;
         },
       ));
       service.addSpot(spot);
@@ -630,7 +629,6 @@ void main() {
         label: '30',
         on: (spot) {
           return spot.band == Band.meters30;
-          ;
         },
       ));
       service.addSpot(spot);

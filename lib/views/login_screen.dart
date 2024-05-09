@@ -166,6 +166,12 @@ class LoginScreenState extends State<LoginScreen> {
             Navigator.pushNamed(context, '/main');
           });
         }
+      } else {
+        setState(() {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Failure to connect to telnet servers'),
+          ));
+        });
       }
     }
   }

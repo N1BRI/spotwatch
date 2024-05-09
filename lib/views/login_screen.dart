@@ -26,9 +26,8 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    if(Platform.isLinux){
-
-    }else{
+    if (Platform.isLinux) {
+    } else {
       _checkLocationPermission();
     }
   }
@@ -59,7 +58,13 @@ class LoginScreenState extends State<LoginScreen> {
                         child: Column(
                       children: [
                         CircularProgressIndicator(),
-                        Text('Connecting to Reverse Beacon Telnet Servers')
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                              'Connecting to Reverse Beacon Telnet Servers',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                        )
                       ],
                     ));
                   } else if (_reverseBeaconNodeService.isLoading()) {
@@ -67,7 +72,14 @@ class LoginScreenState extends State<LoginScreen> {
                         child: Column(
                       children: [
                         CircularProgressIndicator(),
-                        Text('Retrieving Reverse Beacon Node List')
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Retrieving Reverse Beacon Node List',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        )
                       ],
                     ));
                   } else {
@@ -147,7 +159,8 @@ class LoginScreenState extends State<LoginScreen> {
 
   void _connect() async {
     if (isValidCallsign(_callsign)) {
-      if (await _reverseBeaconService.connect(_callsign!.replaceAll(' ', '').toUpperCase())) {
+      if (await _reverseBeaconService
+          .connect(_callsign!.replaceAll(' ', '').toUpperCase())) {
         if (await _reverseBeaconNodeService.loadBeacons()) {
           setState(() {
             Navigator.pushNamed(context, '/main');

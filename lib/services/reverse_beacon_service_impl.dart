@@ -154,10 +154,10 @@ class ReverseBeaconServiceImpl extends ChangeNotifier
       if(_bandFilters.any((f) => f.on(orphanedSpots[i]))){
         orphanedSpots.remove(orphanedSpots[i]);
       }
-      if(_callsignFilters.any((f) => f.on(orphanedSpots[i]))){
+      else if(_callsignFilters.any((f) => f.on(orphanedSpots[i]))){
         orphanedSpots.remove(orphanedSpots[i]);
       }
-      if(_modeFilters.any((f) => f.on(orphanedSpots[i]))){
+      else if(_modeFilters.any((f) => f.on(orphanedSpots[i]))){
         orphanedSpots.remove(orphanedSpots[i]);
       }
     }

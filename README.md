@@ -1,6 +1,4 @@
-# Spotwatch
-
-<img src="./assets/splash.png" width="200">
+<img src="./assets/splash.png" width="300">
 
 A minimal, mobile, <a href="https://www.reversebeacon.net/">Reverse Beacon</a> client.
 - Shows CW, FT8, FT4, & RTTY spots

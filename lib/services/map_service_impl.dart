@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:gridlocator/gridlocator.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:reverse_beacon/reverse_beacon.dart';
 import 'package:spotwatch/contracts/geolocation_service.dart';
@@ -18,9 +19,8 @@ class MapServiceImpl extends ChangeNotifier
   final GeolocationService _geolocationService;
   final ReverseBeaconService _reverseBeaconService;
   final ReverseBeaconNodeService _reverseBeaconNodeService;
-  // final MapController _mapController = MapController();
-  MapPosition _mapPosition =
-      const MapPosition(zoom: 12.0, center: LatLng(37.234332396, -115.80666344));
+  MapPosition _mapPosition = const MapPosition(
+      zoom: 12.0, center: LatLng(37.234332396, -115.80666344));
   bool _showBeacons = true;
 
   MapServiceImpl(
@@ -34,11 +34,6 @@ class MapServiceImpl extends ChangeNotifier
     _mapPosition = _mapPosition.copyWith(center: location);
   }
 
-  @override
-  MapController getMapController() {
-    // TODO: implement getMapController
-    throw UnimplementedError();
-  }
 
   @override
   List<Marker> getNodeMarkers() {
@@ -46,10 +41,10 @@ class MapServiceImpl extends ChangeNotifier
         .getBeacons()
         .map((b) => Marker(
             point: b.latLng,
-            width: 15,
-            height: 15,
+            width: 25,
+            height: 25,
             child: const Icon(Icons.my_location,
-                size: 16, color: Color(0xff2b87ff))))
+                size: 25, color: Color(0xff2b87ff))))
         .toList();
   }
 
@@ -83,7 +78,7 @@ class MapServiceImpl extends ChangeNotifier
       var skimmerLatLng =
           _reverseBeaconNodeService.getLatLngByCallsign(spot.skimmerCall);
       if (gridSquare != null && gridSquare != 'N/A' && skimmerLatLng != null) {
-        if(gridSquare.length == 4){
+        if (gridSquare.length == 4) {
           gridSquare = '${gridSquare}aa';
         }
         var digiSpotLoc = Gridlocator.decode(gridSquare);
@@ -109,20 +104,25 @@ class MapServiceImpl extends ChangeNotifier
       if (match != null) {
         markers.add(Marker(
             point: match,
-            width: 15,
-            height: 15,
-            child: Icon(Icons.my_location,
-                size: 15, color: spotBandToColor(spot.band))));
+            width: 25,
+            height: 25,
+            child:  Tooltip(
+              message: 'Spotter: ${spot.skimmerCall}\nSpotted: ${spot.spottedCall}\nUTC: ${DateFormat('HH:mm').format(spot.time)}\nSNR: ${spot.db}\nMode: ${spot.mode.name.toUpperCase()}',
+              child: Icon(Icons.my_location,
+                    size: 25, color: spotBandToColor(spot.band)),
+            ),
+             
+            ));
       }
     }
     return markers;
   }
-  
+
   @override
   bool getShowBeacons() {
     return _showBeacons;
   }
-  
+
   @override
   void setShowBeacons(bool status) {
     _showBeacons = status;

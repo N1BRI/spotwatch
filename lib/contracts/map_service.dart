@@ -4,7 +4,6 @@ import 'package:reverse_beacon/reverse_beacon.dart';
 import 'package:spotwatch/contracts/loadable.dart';
 
 abstract class MapService extends ChangeNotifier with Loadable {
-  MapController getMapController();
   List<Marker> getSpotLayer(List<Spot> spots);
   List<Marker> getNodeMarkers();
   MapPosition getPosition();

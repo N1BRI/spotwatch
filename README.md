@@ -15,7 +15,9 @@ Planned features:
 Possible additional features:
 - [ ] Nearby beacons filter, custom filters
 - [ ] small logger screen that outputs basic .adif
+  
 
+<img src="./assets/sw-ani.gif">
 <img src="./assets/login.png">
 <img src="./assets/spotlist.png">
 <img src="./assets/spotmap.png">

@@ -16,8 +16,9 @@ Possible additional features:
 - [ ] Nearby beacons filter, custom filters
 - [ ] small logger screen that outputs basic .adif
   
-
-<img src="./assets/sw-ani.gif">
+<video height="800" controls>
+  <source src="./assets/spotwatch-vid.mp4" type="video/mp4">
+</video>
 <img src="./assets/login.png">
 <img src="./assets/spotlist.png">
 <img src="./assets/spotmap.png">

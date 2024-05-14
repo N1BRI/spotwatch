@@ -9,15 +9,11 @@ class GeolocationServiceImpl extends ChangeNotifier
     implements GeolocationService {
   LatLng? position;
   GeolocationServiceImpl();
-  @override
-  LatLng getPostionFromGridSquare(String gridSquare) {
-    // TODO: implement getPostionFromGridSquare
-    throw UnimplementedError();
-  }
+
 
   @override
   Future<bool> isLocationPermissionGranted() async {
-    var status = await Geolocator.checkPermission();
+    var status = await Geolocator.requestPermission();
     return status == LocationPermission.always ||
         status == LocationPermission.whileInUse;
   }

@@ -18,7 +18,7 @@ Possible additional features:
   
 
 <img src="./assets/spotwatch-vid.gif">
-<img src="./assets/login.png">
-<img src="./assets/spotlist.png">
-<img src="./assets/spotmap.png">
-<img src="./assets/filters.png">
+<img src="./assets/login.png" width="400">
+<img src="./assets/spotlist.png" width="400">
+<img src="./assets/spotmap.png" width="400">
+<img src="./assets/filters.png" width="400">

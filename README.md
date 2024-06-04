@@ -5,12 +5,10 @@ A minimal, mobile, <a href="https://www.reversebeacon.net/">Reverse Beacon</a> c
 
 Planned features:
 - [x] Android phone & tablet support
-- [x] IOS, MacOS support
 - [x] Windows 11 support
 - [x] FT8/FT4, RTTY, CW spots
 - [x] Callsign, Mode, Band filters
 - [x] Show spots and beacons on map
-- [ ] Offical Play store and App store distributions
 
 Possible additional features:
 - [ ] Nearby beacons filter, custom filters
